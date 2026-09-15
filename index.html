@@ -14,6 +14,12 @@ canvas{width:100%;height:100%;display:block}
 .side{background:#181818;border-left:1px solid #333;padding:16px;overflow:auto}.title{font-size:22px;font-weight:1000;color:#ffd84d;margin-bottom:8px}
 button{width:100%;border:0;border-radius:12px;padding:13px;margin:6px 0;font-weight:1000;cursor:pointer}.start{background:#ffd84d;color:#111}.reset{background:#444;color:white}.rec{background:#ff4d4d;color:white}.csv{background:#3c7dff;color:white}.shuffle{background:#8b5cf6;color:white}
 textarea{width:100%;height:140px;background:#0f0f0f;color:white;border:1px solid #444;border-radius:10px;padding:10px;font-size:12px}
+.tierRow{display:flex;align-items:center;gap:6px;margin:7px 0}
+.tierRow span{width:32px;flex:none;font-weight:1000;color:#ffd84d;font-size:13px}
+.tierRow input[type=number]{width:58px;flex:none}
+.tierRow input[type=text]{flex:1;min-width:0}
+input[type=number],input[type=text]{background:#0f0f0f;color:#fff;border:1px solid #444;border-radius:8px;padding:8px 9px;font-size:12px}
+.apply{background:#2ecc71;color:#111}
 .panel{background:#222;border:1px solid #333;border-radius:12px;padding:10px;margin-top:10px}.small{font-size:12px;color:#bbb;line-height:1.45}pre{white-space:pre-wrap;font-size:12px;line-height:1.4;max-height:260px;overflow:auto}
 .countOverlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;z-index:70;background:rgba(0,0,0,.18);font-weight:1000;font-size:132px;color:#fff;text-shadow:0 6px 0 #111,0 0 18px rgba(255,216,77,.85),0 0 34px rgba(0,0,0,.95);pointer-events:none}.countOverlay.start{font-size:54px;color:#ffd84d;letter-spacing:1px}.countOverlay.show{display:flex;animation:countPop .42s ease-out both}@keyframes countPop{0%{transform:scale(.55);opacity:0}45%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
 .finalWinnersModal{position:absolute;inset:0;display:none;align-items:center;justify-content:center;z-index:55;background:rgba(0,0,0,.72);padding:8px}.finalWinnersModal.show{display:flex}.finalWinnersBox{width:min(1320px,99vw);height:min(820px,98vh);background:linear-gradient(180deg,#252525,#101010);border:5px solid #ffd84d;border-radius:22px;box-shadow:0 18px 60px rgba(0,0,0,.55);padding:12px;color:#fff;display:flex;flex-direction:column}.finalWinnersTitle{text-align:center;font-size:28px;font-weight:1000;color:#ffd84d;margin-bottom:2px}.finalWinnersSub{text-align:center;font-size:16px;font-weight:900;margin-bottom:6px}.finalWinnersList{flex:1;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:8px}.finalGrid{display:grid;grid-template-columns:.72fr 1fr 2.05fr;gap:8px;height:100%}.finalCol{background:rgba(0,0,0,.18);border-radius:10px;padding:8px;overflow:hidden}.finalCol h3{margin:0 0 7px 0;color:#ffd84d;font-size:16px;text-align:center;line-height:1.18}.finalCol div{font-size:13.5px;line-height:1.36;white-space:pre-wrap;font-weight:900;letter-spacing:1px;word-spacing:3px}.finalCol.randomBox div{font-size:13px;line-height:1.31;letter-spacing:.9px;word-spacing:2.5px;column-count:2;column-gap:24px}.finalWinnersBtns{display:flex;gap:10px;margin-top:7px}.finalWinnersBtns button{margin:0;padding:8px}.finalWinnersClose{background:#ffd84d;color:#111}.finalWinnersSave{background:#3c7dff;color:#fff}
@@ -46,12 +52,19 @@ textarea{width:100%;height:140px;background:#0f0f0f;color:white;border:1px solid
  </div>
  <aside class="side">
   <div class="title">낙하 레이싱 V35</div>
-  <div class="small">시간 제한 없음. 55명이 결승선을 통과할 때까지 진행됩니다. V40은 최종 당첨자 명단 폰트와 위아래 간격을 키워 가독성을 개선했습니다.</div>
+  <div class="small">시간 제한 없음. 설정한 당첨 인원이 결승선을 통과할 때까지 진행됩니다. V40은 최종 당첨자 명단 폰트와 위아래 간격을 키워 가독성을 개선했습니다.</div>
   <button class="start" id="startBtn">START 추첨 실행</button>
   <button class="reset" id="resetBtn">초기화</button>
   <button class="rec" id="recBtn">녹화 시작/종료</button>
   <button class="csv" id="csvBtn">결과 CSV 저장</button>
   <div class="panel"><b>참가자 명단</b><textarea id="names"></textarea><button class="shuffle" id="shuffleBtn">참가자 순서 섞기</button></div>
+  <div class="panel">
+   <b>등수별 인원 / 당첨상품 설정</b>
+   <div class="tierRow"><span>1등</span><input type="number" id="firstCount" min="0" value="3" /><span style="width:auto">명</span><input type="text" id="firstPrize" value="유모차 당첨 !!" placeholder="1등 상품명" /></div>
+   <div class="tierRow"><span>2등</span><input type="number" id="secondCount" min="0" value="10" /><span style="width:auto">명</span><input type="text" id="secondPrize" value="아무도없개 5만원 쿠폰" placeholder="2등 상품명" /></div>
+   <div class="tierRow"><span>3등</span><input type="number" id="thirdCount" min="0" value="42" /><span style="width:auto">명</span><input type="text" id="thirdPrize" value="랜덤박스" placeholder="3등 상품명" /></div>
+   <button class="apply" id="applyTiersBtn">등수/상품 적용</button>
+  </div>
   <div class="panel"><b>실시간 선두권</b><pre id="rankBox">대기 중</pre></div>
   <div class="panel"><b>결과</b><pre id="resultBox">아직 결과 없음</pre></div>
  </aside>
@@ -65,7 +78,22 @@ const COUNTDOWN_BEEP_SRC = "data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADT
 const canvas=document.getElementById('cv'), ctx=canvas.getContext('2d'), stage=document.getElementById('stage'), countOverlay=document.getElementById('countOverlay');
 const namesEl=document.getElementById('names'), finishText=document.getElementById('finishText'), leadText=document.getElementById('leadText'), statusText=document.getElementById('statusText'), rankBox=document.getElementById('rankBox'), resultBox=document.getElementById('resultBox'), recText=document.getElementById('recText');
 const finalWinnersModal=document.getElementById('finalWinnersModal'), finalWinnersList=document.getElementById('finalWinnersList'), finalWinnersCloseBtn=document.getElementById('finalWinnersCloseBtn'), finalWinnersCsvBtn=document.getElementById('finalWinnersCsvBtn');
-const WINNERS=55, FIRST=3, SECOND=10;
+let FIRST=3, SECOND=10, THIRD=42, WINNERS=FIRST+SECOND+THIRD;
+let PRIZE1='유모차 당첨 !!', PRIZE2='아무도없개 5만원 쿠폰', PRIZE3='랜덤박스';
+const firstCountEl=document.getElementById('firstCount'), secondCountEl=document.getElementById('secondCount'), thirdCountEl=document.getElementById('thirdCount');
+const firstPrizeEl=document.getElementById('firstPrize'), secondPrizeEl=document.getElementById('secondPrize'), thirdPrizeEl=document.getElementById('thirdPrize');
+function applyTierSettings(){
+  const f=Math.max(0,parseInt(firstCountEl.value,10)||0), s=Math.max(0,parseInt(secondCountEl.value,10)||0), t=Math.max(0,parseInt(thirdCountEl.value,10)||0);
+  const total=f+s+t;
+  if(total<=0){alert('최소 1명 이상의 인원을 설정해 주세요.'); return;}
+  const list=namesEl.value.split(/\n+/).map(v=>v.trim()).filter(Boolean);
+  if(total>list.length){alert(`참가자 수(${list.length}명)보다 많은 인원을 당첨자로 설정할 수 없습니다.`); return;}
+  if(running){alert('추첨이 진행 중일 때는 등수 설정을 변경할 수 없습니다. 초기화 후 변경해 주세요.'); return;}
+  FIRST=f; SECOND=s; THIRD=t; WINNERS=FIRST+SECOND+THIRD;
+  PRIZE1=firstPrizeEl.value.trim()||'1등 상품'; PRIZE2=secondPrizeEl.value.trim()||'2등 상품'; PRIZE3=thirdPrizeEl.value.trim()||'3등 상품';
+  init();
+  statusText.textContent='등수/상품 설정 반영';
+}
 const MAP_H=10000;
 const LANE_W=560;               // 좁은 통로 폭 유지
 const LANE_X=120;
@@ -234,7 +262,7 @@ function buildMap(){
    }
  }
 }
-function init(){cancelAnimationFrame(raf); raf=0; buildMap(); finished=[]; confetti=[]; celebration=null; celebrateUntil=0; celebrationQueue=[]; timeScale=1; resultsShown=false; finaleSoundPlayed=false; countdownText=""; countdownUntil=0; hideCountdownDom(); hideFinalWinnersPopup(); cameraY=0; running=false; last=0; let list=namesEl.value.split(/\n+/).map(v=>v.trim()).filter(Boolean); if(!list.length){list=defaultNames().split(/\n+/); namesEl.value=list.join('\n');} const rnd=rand(Date.now()%999999); racers=list.map((name,i)=>({name, x:LANE_X+R+rnd()*(LANE_W-R*2), y:40-(i%28)*8-Math.floor(i/28)*42, vx:(rnd()-.5)*3, vy:rnd()*0.75, done:false, rank:0, spin:rnd()*6.28, stuckUntil:0, trapCooldown:0, trapBounce:false, trapVX:0, trapVY:0})); finishText.textContent='0/55'; leadText.textContent='대기'; statusText.textContent='준비'; rankBox.textContent='대기 중'; resultBox.textContent='아직 결과 없음'; draw();}
+function init(){cancelAnimationFrame(raf); raf=0; buildMap(); finished=[]; confetti=[]; celebration=null; celebrateUntil=0; celebrationQueue=[]; timeScale=1; resultsShown=false; finaleSoundPlayed=false; countdownText=""; countdownUntil=0; hideCountdownDom(); hideFinalWinnersPopup(); cameraY=0; running=false; last=0; let list=namesEl.value.split(/\n+/).map(v=>v.trim()).filter(Boolean); if(!list.length){list=defaultNames().split(/\n+/); namesEl.value=list.join('\n');} const rnd=rand(Date.now()%999999); racers=list.map((name,i)=>({name, x:LANE_X+R+rnd()*(LANE_W-R*2), y:40-(i%28)*8-Math.floor(i/28)*42, vx:(rnd()-.5)*3, vy:rnd()*0.75, done:false, rank:0, spin:rnd()*6.28, stuckUntil:0, trapCooldown:0, trapBounce:false, trapVX:0, trapVY:0})); finishText.textContent='0/'+WINNERS; leadText.textContent='대기'; statusText.textContent='준비'; rankBox.textContent='대기 중'; resultBox.textContent='아직 결과 없음'; draw();}
 function collideCircle(a,b){let dx=a.x-b.x, dy=a.y-b.y, dist=Math.hypot(dx,dy)||.01, min=R*2; if(dist<min){let nx=dx/dist, ny=dy/dist, push=(min-dist)*0.5; a.x+=nx*push; a.y+=ny*push; b.x-=nx*push; b.y-=ny*push; let dvx=a.vx-b.vx, dvy=a.vy-b.vy, hit=dvx*nx+dvy*ny; if(hit<0){let imp=-hit*.9; a.vx+=nx*imp; a.vy+=ny*imp; b.vx-=nx*imp; b.vy-=ny*imp;}}}
 function collideStatic(p,o){let dx=p.x-o.x, dy=p.y-o.y, dist=Math.hypot(dx,dy)||.01, min=R+o.r; if(dist<min){let nx=dx/dist, ny=dy/dist; p.x=o.x+nx*min; p.y=o.y+ny*min; let dot=p.vx*nx+p.vy*ny; if(dot<0){p.vx-=1.7*dot*nx; p.vy-=1.7*dot*ny;} p.vx+=nx*.45; p.vy+=ny*.45;}}
 function collideBar(p,b){let ca=Math.cos(b.ang), sa=Math.sin(b.ang); let dx=p.x-b.x, dy=p.y-b.y; let t=Math.max(-b.len/2,Math.min(b.len/2,dx*ca+dy*sa)); let cx=b.x+ca*t, cy=b.y+sa*t; let ox=p.x-cx, oy=p.y-cy; let dist=Math.hypot(ox,oy)||.01; if(dist<R+10){let nx=ox/dist, ny=oy/dist; p.x=cx+nx*(R+10); p.y=cy+ny*(R+10); let dot=p.vx*nx+p.vy*ny; if(dot<1){p.vx-=1.8*dot*nx; p.vy-=1.8*dot*ny;} p.vx+=-sa*b.spd*2.2; p.vy+=ca*b.spd*2.2;}}
@@ -613,7 +641,7 @@ function playFanfare(){
 function enqueueCelebration(p,ts){
  playArrivalSound(); // V29: 캐릭터 도착 팝업 순간 효과음
  const isFinal=p.rank===WINNERS;
- const tier=p.rank<=3?'top':(p.rank<=13?'mid':'small');
+ const tier=p.rank<=FIRST?'top':(p.rank<=FIRST+SECOND?'mid':'small');
  // V17: 결승선 통과 판정과 동시에 즉시 팝업. 기존 팝업 대기열보다 도착 즉시 반응 우선.
  celebration={name:p.name, rank:p.rank, t:ts, x:p.x, y:p.y, tier, isFinal};
  celebrateUntil=ts+(isFinal?4700:(tier==='top'?2400:(tier==='mid'?1050:620)));
@@ -660,9 +688,9 @@ function maskWinnerName(raw){
  return prefix + base + suffix;
 }
 function prizeTextByRank(rank){
- if(rank<=3) return '유모차 당첨 !!';
- if(rank<=13) return '(아무도없개 5만원 쿠폰)';
- return '(랜덤박스)';
+ if(rank<=FIRST) return PRIZE1;
+ if(rank<=FIRST+SECOND) return PRIZE2;
+ return PRIZE3;
 }
 function drawPopupText(text,x,y,font,fill='#fff',stroke='#111',lineWidth=0){
  ctx.font=font; ctx.fillStyle=fill; ctx.lineWidth=lineWidth; ctx.strokeStyle=stroke;
@@ -719,21 +747,22 @@ function showLiveResult(){
 }
 function escapeHtml(v){return String(v).replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));}
 function buildFinalWinnersText(){
- const first=finished.slice(0,3).map(p=>`${p.rank}등 ${maskWinnerName(p.name)}`);
- const second=finished.slice(3,13).map(p=>`${p.rank}등 ${maskWinnerName(p.name)}`);
- const third=finished.slice(13,55).map(p=>`${p.rank}등 ${maskWinnerName(p.name)}`);
- return '🥇 유모차 당첨 !!\n' + first.join('\n') +
-        '\n\n🎁 아무도없개 5만원 쿠폰\n' + second.join('\n') +
-        '\n\n📦 랜덤박스\n' + third.join('\n');
+ const first=finished.slice(0,FIRST).map(p=>`${p.rank}등 ${maskWinnerName(p.name)}`);
+ const second=finished.slice(FIRST,FIRST+SECOND).map(p=>`${p.rank}등 ${maskWinnerName(p.name)}`);
+ const third=finished.slice(FIRST+SECOND,WINNERS).map(p=>`${p.rank}등 ${maskWinnerName(p.name)}`);
+ return `🥇 ${PRIZE1}\n` + first.join('\n') +
+        `\n\n🎁 ${PRIZE2}\n` + second.join('\n') +
+        `\n\n📦 ${PRIZE3}\n` + third.join('\n');
 }
 function buildFinalWinnersHtml(){
- const first=finished.slice(0,3).map(p=>`${p.rank}등 ${maskWinnerName(p.name)}`).join('\n');
- const second=finished.slice(3,13).map(p=>`${p.rank}등 ${maskWinnerName(p.name)}`).join('\n');
- const third=finished.slice(13,55).map(p=>`${p.rank}등 ${maskWinnerName(p.name)}`).join('\n');
+ const first=finished.slice(0,FIRST).map(p=>`${p.rank}등 ${maskWinnerName(p.name)}`).join('\n');
+ const second=finished.slice(FIRST,FIRST+SECOND).map(p=>`${p.rank}등 ${maskWinnerName(p.name)}`).join('\n');
+ const third=finished.slice(FIRST+SECOND,WINNERS).map(p=>`${p.rank}등 ${maskWinnerName(p.name)}`).join('\n');
+ const thirdRange=THIRD>0?`<br>${FIRST+SECOND+1}~${WINNERS}등`:'';
  return `<div class="finalGrid">
-  <div class="finalCol"><h3>🥇 유모차<br>당첨 !!</h3><div>${escapeHtml(first)}</div></div>
-  <div class="finalCol"><h3>🎁 아무도없개<br>5만원 쿠폰</h3><div>${escapeHtml(second)}</div></div>
-  <div class="finalCol randomBox"><h3>📦 랜덤박스<br>14~55등</h3><div>${escapeHtml(third)}</div></div>
+  <div class="finalCol"><h3>🥇 ${escapeHtml(PRIZE1)}</h3><div>${escapeHtml(first)}</div></div>
+  <div class="finalCol"><h3>🎁 ${escapeHtml(PRIZE2)}</h3><div>${escapeHtml(second)}</div></div>
+  <div class="finalCol randomBox"><h3>📦 ${escapeHtml(PRIZE3)}${thirdRange}</h3><div>${escapeHtml(third)}</div></div>
  </div>`;
 }
 function showFinalWinnersPopup(){
@@ -758,12 +787,13 @@ document.getElementById('shuffleBtn').onclick=()=>{
  namesEl.value=list.join('\n');
  statusText.textContent='명단 섞음';
 };
+document.getElementById('applyTiersBtn').onclick=applyTierSettings;
 document.getElementById('startBtn').onclick=()=>{startCountdownThenRace();};
 document.getElementById('resetBtn').onclick=()=>{stopBgm(); init();};
 if(finalWinnersCloseBtn) finalWinnersCloseBtn.onclick=hideFinalWinnersPopup;
 if(finalWinnersCsvBtn) finalWinnersCsvBtn.onclick=()=>document.getElementById('csvBtn').click();
 
-document.getElementById('csvBtn').onclick=()=>{if(!finished.length)return alert('아직 결과가 없습니다.'); const rows=[['순위','등수','이름']]; finished.forEach((p,i)=>rows.push([i+1,i<3?'유모차 당첨':i<13?'아무도없개 5만원 쿠폰':'랜덤박스',maskWinnerName(p.name)])); const csv='\ufeff'+rows.map(r=>r.join(',')).join('\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})); a.download='55명_순위추첨_결과_V40.csv'; a.click();};
+document.getElementById('csvBtn').onclick=()=>{if(!finished.length)return alert('아직 결과가 없습니다.'); const rows=[['순위','등수','이름']]; finished.forEach((p,i)=>rows.push([i+1,i<FIRST?PRIZE1:i<FIRST+SECOND?PRIZE2:PRIZE3,maskWinnerName(p.name)])); const csv='\ufeff'+rows.map(r=>r.join(',')).join('\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})); a.download=`${WINNERS}명_순위추첨_결과_V40.csv`; a.click();};
 
 document.getElementById('recBtn').onclick=async()=>{
  try{
