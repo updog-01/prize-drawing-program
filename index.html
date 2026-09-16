@@ -179,12 +179,12 @@ function buildMap(){
      for(let tries=0;tries<18 && !ok;tries++){
        const yy=y+rnd()*210;
        const r=11+rnd()*17;
-       const left=laneLeftAt(yy)+R+r+8, right=laneRightAt(yy)-R-r-8;
+       const left=laneLeftAt(yy)+R+r+24, right=laneRightAt(yy)-R-r-24;
        if(right<=left) continue;
        const x=left+rnd()*(right-left);
-       if(!canPlace(x,yy,r,18)) continue;
+       if(!canPlace(x,yy,r,28)) continue;
        obstacles.push({x, y:yy, r, shape:shapes[Math.floor(rnd()*shapes.length)], ang:rnd()*Math.PI});
-       remember(x,yy,r+18);
+       remember(x,yy,r+20);
        ok=true;
      }
    }
@@ -194,10 +194,10 @@ function buildMap(){
    let ok=false;
    for(let tries=0;tries<20 && !ok;tries++){
      const yy=y+rnd()*260;
-     const left=laneLeftAt(yy)+115, right=laneRightAt(yy)-115;
+     const left=laneLeftAt(yy)+125, right=laneRightAt(yy)-125;
      if(right<=left) continue;
      const x=left+rnd()*Math.max(1,right-left), len=150+rnd()*95, rr=len*.36;
-     if(!canPlace(x,yy,rr,28)) continue;
+     if(!canPlace(x,yy,rr,36)) continue;
      bars.push({x, y:yy, len, ang:rnd()*6.28, spd:(rnd()>.5?1:-1)*(1.05+rnd()*1.65)});
      remember(x,yy,rr);
      ok=true;
@@ -209,12 +209,12 @@ function buildMap(){
    for(let tries=0;tries<18 && !ok;tries++){
      const yy=y+rnd()*300;
      const w=(48+rnd()*28)*2, h=w, r=w/2; // V26: 블랙홀 크기 2배 확대
-     const left=laneLeftAt(yy)+w/2+R+12, right=laneRightAt(yy)-w/2-R-12;
+     const left=laneLeftAt(yy)+w/2+R+28, right=laneRightAt(yy)-w/2-R-28;
      if(right<=left) continue;
      const x=left+rnd()*(right-left);
-     if(!canPlace(x,yy,r,24)) continue;
+     if(!canPlace(x,yy,r,30)) continue;
      traps.push({x, y:yy, w, h, r, stop:200}); // V25: 블랙홀 0.2초 후 튕겨져 나감
-     remember(x,yy,r+20);
+     remember(x,yy,r+24);
      ok=true;
    }
  }
@@ -223,14 +223,14 @@ function buildMap(){
    let ok=false;
    for(let tries=0;tries<24 && !ok;tries++){
      const yy=y+rnd()*360;
-     const left=laneLeftAt(yy)+85, right=laneRightAt(yy)-85;
+     const left=laneLeftAt(yy)+95, right=laneRightAt(yy)-95;
      if(right<=left) continue;
      const x=left+rnd()*(right-left);
      const len=(88+rnd()*54)*1.5, thick=(18+rnd()*8)*1.5, ang=(rnd()-.5)*1.15;
      const rr=len*.55;
-     if(!canPlace(x,yy,rr,26)) continue;
+     if(!canPlace(x,yy,rr,34)) continue;
      redWalls.push({x,y:yy,len,thick,ang});
-     remember(x,yy,rr+18);
+     remember(x,yy,rr+22);
      ok=true;
    }
  }
@@ -252,12 +252,12 @@ function buildMap(){
    for(let tries=0;tries<32 && !ok;tries++){
      const yy=fy-620+rnd()*330;
      const r=13+rnd()*12;
-     const left=laneLeftAt(yy)+R+r+8, right=laneRightAt(yy)-R-r-8;
+     const left=laneLeftAt(yy)+R+r+24, right=laneRightAt(yy)-R-r-24;
      if(right<=left) continue;
      const x=left+rnd()*(right-left);
-     if(!canPlace(x,yy,r,22)) continue;
+     if(!canPlace(x,yy,r,28)) continue;
      obstacles.push({x, y:yy, r, shape:shapes[Math.floor(rnd()*shapes.length)], ang:rnd()*Math.PI});
-     remember(x,yy,r+18);
+     remember(x,yy,r+20);
      ok=true;
    }
  }
